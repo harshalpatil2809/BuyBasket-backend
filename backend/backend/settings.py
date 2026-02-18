@@ -126,6 +126,7 @@ AUTH_USER_MODEL = 'users.User'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8080",
+    "http://localhost:5173",
 ]   
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
