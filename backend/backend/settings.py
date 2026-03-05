@@ -158,3 +158,6 @@ REST_FRAMEWORK = {
 
 # include default cors headers and ensure authorization/content-type are allowed
 CORS_ALLOW_HEADERS = list(default_headers) + ['authorization', 'content-type']
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
