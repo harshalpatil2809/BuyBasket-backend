@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 
 class AddCart(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         user = request.user
         product_name = request.data.get("product_name")
@@ -19,7 +20,7 @@ class AddCart(APIView):
             user=user,
             product_name=product_name,
             price=price,
-            image=image,
+            image_url=image,   # ✅ FIX HERE
             quantity=quantity
         )
 
@@ -28,8 +29,6 @@ class AddCart(APIView):
             "cart_id": cart.id
         }, status=status.HTTP_201_CREATED)
 
-
-from rest_framework.permissions import IsAuthenticated
 
 class ViewCart(APIView):
     permission_classes = [IsAuthenticated]
@@ -44,8 +43,28 @@ class ViewCart(APIView):
                 "product_name": item.product_name,
                 "price": item.price,
                 "quantity": item.quantity,
-                "image": item.image,
+                "image": item.image_url,   # ✅ FIX
                 "total": item.total_price()
             })
 
         return Response(data)
+    
+
+class RemoveCart(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, id):
+        try:
+            cart_item = Cart.objects.get(id=id, user=request.user)
+            cart_item.delete()
+
+            return Response(
+                {"message": "Item removed from cart"},
+                status=status.HTTP_200_OK
+            )
+
+        except Cart.DoesNotExist:
+            return Response(
+                {"error": "Item not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
