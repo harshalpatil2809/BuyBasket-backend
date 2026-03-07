@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Cart
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+
 
 
 class AddCart(APIView):
@@ -68,3 +70,11 @@ class RemoveCart(APIView):
                 {"error": "Item not found"},
                 status=status.HTTP_404_NOT_FOUND
             )
+        
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def clear_cart(request):
+    Cart.objects.filter(user=request.user).delete()
+    return Response({"message": "Cart cleared"})
