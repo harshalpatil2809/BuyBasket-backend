@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        validated_data.pop('username', None) 
+        # validated_data.pop('username', None) 
         return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):

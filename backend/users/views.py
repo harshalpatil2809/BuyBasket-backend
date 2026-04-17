@@ -8,20 +8,20 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserRegistration(APIView):
+    permission_classes = [] 
+    authentication_classes = []
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
-        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        print("--- REGISTRATION FAILED ---")
-        print("DATA RECEIVED:", request.data) 
-        print("SERIALIZER ERRORS:", serializer.errors)
-        print("---------------------------")
-
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # 400 error ke saath exact details bhejo
+        return Response({
+            "django_errors": serializer.errors,
+            "received_data": request.data
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLogin(TokenObtainPairView):
     pass
