@@ -5,20 +5,25 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.tokens import RefreshToken # Ye zaroori hai
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserRegistration(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # Agar valid nahi hai, toh 400 error aayega na ki 500
+        
+        print("--- REGISTRATION FAILED ---")
+        print("DATA RECEIVED:", request.data) 
+        print("SERIALIZER ERRORS:", serializer.errors)
+        print("---------------------------")
+
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLogin(TokenObtainPairView):
-    # SimpleJWT khud hi handle kar lega email login 
-    # agar models.py mein USERNAME_FIELD = 'email' hai.
     pass
 
 class UserView(APIView):
