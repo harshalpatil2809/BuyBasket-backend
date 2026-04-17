@@ -9,10 +9,10 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
-    def create(self, validated_data):
-        # Hum direct naya UserManager use kar rahe hain
-        return User.objects.create_user(
-            email=validated_data['email'],
-            name=validated_data.get('name', ''),
-            password=validated_data['password']
-        )
+    # def create(self, validated_data):
+    #     # Hum direct naya UserManager use kar rahe hain
+    #     return User.objects.create_user(
+    #         email=validated_data['email'],
+    #         name=validated_data.get('name', ''),
+    #         password=validated_data['password']
+    #     )
