@@ -7,16 +7,13 @@ class UserSerializer(serializers.ModelSerializer):
         # 'id' automatic banta hai, password 'write_only' hai security ke liye
         fields = ['id', 'email', 'name', 'password']
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'username': {'required': False, 'allow_null': True}
         }
 
     def create(self, validated_data):
-        user = User.objects.create_user(
-            email=validated_data['email'],
-            name=validated_data.get('name', ''),
-            password=validated_data['password']
-        )
-        return user
+        validated_data.pop('username', None) 
+        return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
         """
