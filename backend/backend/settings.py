@@ -29,7 +29,13 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['intellex-backend.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'buybasket-backend.onrender.com',  # Ye tumhara asli URL hai jo logs mein dikh raha hai
+    'intellex-backend.onrender.com', 
+    'localhost', 
+    '127.0.0.1',
+    '.onrender.com'  # Ye pro-tip hai: isse saare render URLs allow ho jayenge
+]
 
 
 # Application definition
