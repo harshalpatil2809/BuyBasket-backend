@@ -30,8 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'buybasket-backend.onrender.com',  # Ye tumhara asli URL hai jo logs mein dikh raha hai
-    'intellex-backend.onrender.com', 
+    'buybasket-backend-8sf5.onrender.com'
     'localhost', 
     '127.0.0.1',
     '.onrender.com'  # Ye pro-tip hai: isse saare render URLs allow ho jayenge
